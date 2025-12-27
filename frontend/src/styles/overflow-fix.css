@@ -1,0 +1,105 @@
+/* Global Overflow Prevention Styles */
+
+/* Prevent horizontal scroll on all main containers */
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+#root {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Ensure all containers don't overflow */
+.MuiContainer-root {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Box components */
+.MuiBox-root {
+  overflow-x: clip;
+}
+
+/* Paper and Card components */
+.MuiPaper-root,
+.MuiCard-root {
+  overflow-x: clip;
+}
+
+/* Grid containers */
+.MuiGrid-container {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Ensure images don't overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Ensure iframes don't overflow */
+iframe {
+  max-width: 100%;
+}
+
+/* Prevent pre and code blocks from overflowing */
+pre,
+code {
+  max-width: 100%;
+  overflow-x: auto;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Responsive utilities */
+@media (max-width: 600px) {
+  /* Ensure mobile doesn't have horizontal scroll */
+  body {
+    overflow-x: hidden !important;
+  }
+  
+  .MuiContainer-root {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* Fix for AppBar/Header */
+.MuiAppBar-root {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden;
+  border-radius: 0 !important;
+}
+
+/* Fix for Toolbar */
+.MuiToolbar-root {
+  overflow-x: hidden;
+  max-width: 100%;
+  border-radius: 0 !important;
+}

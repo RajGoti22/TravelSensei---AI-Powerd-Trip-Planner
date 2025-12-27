@@ -1,0 +1,16 @@
+# AI/ML Dependencies for Intelligent Itinerary Generation
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+transformers>=4.30.0
+torch>=2.0.0
+sentence-transformers>=2.2.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+geopy>=2.3.0
+networkx>=3.1.0
+fastapi>=0.100.0
+uvicorn>=0.22.0
+python-dotenv>=1.0.0
+httpx>=0.24.0
+pydantic>=2.0.0
