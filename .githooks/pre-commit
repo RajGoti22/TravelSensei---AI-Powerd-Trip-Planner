@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Optional bypass: export ALLOW_SECRET_PUSH=1
+if [[ -n "${ALLOW_SECRET_PUSH:-}" ]]; then
+  echo "⚠️  ALLOW_SECRET_PUSH set; skipping secret scan."
+  exit 0
+fi
+
+# Allowlisted files (examples only)
+allowlist=(
+  "frontend/.env.example"
+  "backend/env.example"
+)
+
+# Patterns to scan (name:::regex)
+patterns=(
+  "Firebase Web API Key:::AIza[0-9A-Za-z_-]{35}"
+  "AWS Access Key ID:::AKIA[0-9A-Z]{16}"
+  "Stripe Secret Key:::sk_(live|test)_[0-9A-Za-z]{24,}"
+  "Private Key Header:::-----BEGIN (?:RSA )?PRIVATE KEY-----"
+  "Generic API Key:::api_key[[:space:]]*[:=][[:space:]]*\"[A-Za-z0-9_\\-]{20,}\""
+)
+
+files=$(git diff --cached --name-only)
+violations=()
+
+for f in $files; do
+  skip=0
+  for a in "${allowlist[@]}"; do
+    [[ "$f" == "$a" ]] && skip=1 && break
+  done
+  [[ $skip -eq 1 ]] && continue
+
+  # Read staged content
+  content=$(git show ":$f" || true)
+
+  for p in "${patterns[@]}"; do
+    name="${p%%:::*}"
+    regex="${p##*:::}"
+    if echo "$content" | grep -E -q "$regex"; then
+      violations+=("$name in $f")
+    fi
+  done
+done
+
+if (( ${#violations[@]} > 0 )); then
+  echo "❌ Secret patterns detected in staged files:" >&2
+  for v in "${violations[@]}"; do
+    echo " - $v" >&2
+  done
+  echo "To bypass temporarily: export ALLOW_SECRET_PUSH=1" >&2
+  echo "Fix by moving secrets to env vars and ignoring sensitive files." >&2
+  exit 1
+fi
+
+echo "✅ Pre-commit secret scan passed."
