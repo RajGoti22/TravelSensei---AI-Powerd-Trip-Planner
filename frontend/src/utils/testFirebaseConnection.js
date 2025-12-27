@@ -4,8 +4,8 @@
  */
 
 export const testFirebaseAPIKey = async () => {
-  const apiKey = "AIzaSyDwuMnfpnvH6zb5q9m9ZpW0wSNU8FiZDno";
-  const projectId = "travelsensei-6ef12";
+  const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+  const projectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
   
   console.log('🧪 Testing Firebase API Key...');
   console.log('API Key:', apiKey);
@@ -18,7 +18,7 @@ export const testFirebaseAPIKey = async () => {
     const testUrl = `https://identitytoolkit.googleapis.com/v1/projects/${projectId}/accounts:signUp?key=${apiKey}`;
     
     console.log('📡 Testing Identity Toolkit API connection...');
-    console.log('URL:', testUrl.replace(apiKey, 'API_KEY_HIDDEN'));
+    console.log('URL:', (apiKey ? testUrl.replace(apiKey, 'API_KEY_HIDDEN') : testUrl));
     console.log('⚠️  If you see CORS error, this is NORMAL - check API key HTTP referrer restrictions instead.\n');
     
     const testResponse = await fetch(testUrl, {
@@ -77,7 +77,7 @@ export const testFirebaseAPIKey = async () => {
       console.error('🔧 To fix auth/admin-restricted-operation error, check these:\n');
       console.error('1️⃣  API Key HTTP Referrer Restrictions (MOST IMPORTANT):');
       console.error('   → Go to: https://console.cloud.google.com/apis/credentials?project=travelsensei-6ef12');
-      console.error('   → Find API key: AIzaSyDwuMnfpnvH6zb5q9m9ZpW0wSNU8FiZDno');
+      console.error('   → Find API key set in your env (VITE_FIREBASE_API_KEY)');
       console.error('   → Under "Application restrictions": Select "None"');
       console.error('   → Under "API restrictions": Select "Don\'t restrict key"');
       console.error('   → Click Save and wait 5-10 minutes\n');
@@ -102,7 +102,7 @@ export const testFirebaseAPIKey = async () => {
 
 // Test if the API key can access Firebase services
 export const testFirebaseServices = async () => {
-  const apiKey = "AIzaSyDwuMnfpnvH6zb5q9m9ZpW0wSNU8FiZDno";
+  const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
   
   console.log('\n🔍 Testing Firebase Services Access...');
   
@@ -113,7 +113,7 @@ export const testFirebaseServices = async () => {
     },
     {
       name: 'Firebase Installations API',
-      url: `https://firebaseinstallations.googleapis.com/v1/projects/travelsensei-6ef12/installations?key=${apiKey}`
+      url: `https://firebaseinstallations.googleapis.com/v1/projects/${import.meta.env.VITE_FIREBASE_PROJECT_ID}/installations?key=${apiKey}`
     }
   ];
   

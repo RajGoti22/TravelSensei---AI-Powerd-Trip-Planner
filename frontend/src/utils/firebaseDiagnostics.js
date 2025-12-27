@@ -15,13 +15,13 @@ export const runFirebaseDiagnostics = () => {
   // Check Firebase config
   try {
     const firebaseConfig = {
-      apiKey: "AIzaSyDwuMnfpnvH6zb5q9m9ZpW0wSNU8FiZDno",
-      authDomain: "travelsensei-6ef12.firebaseapp.com",
-      projectId: "travelsensei-6ef12",
-      storageBucket: "travelsensei-6ef12.firebasestorage.app",
-      messagingSenderId: "302258386914",
-      appId: "1:302258386914:web:f96c450a5f227ac1a9ebbb",
-      measurementId: "G-EF3VZKESSS"
+      apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+      authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+      projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+      storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+      appId: import.meta.env.VITE_FIREBASE_APP_ID,
+      measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
     };
     
     diagnostics.config = firebaseConfig;
@@ -52,8 +52,8 @@ export const runFirebaseDiagnostics = () => {
   console.log('1. ✅ Email/Password enabled in Firebase Console');
   console.log('2. ⚠️  Check API key restrictions in Google Cloud Console');
   console.log('   - Go to: https://console.cloud.google.com/apis/credentials');
-  console.log('   - Find API key: AIzaSyDwuMnfpnvH6zb5q9m9ZpW0wSNU8FiZDno');
-  console.log('   - Make sure "Don\'t restrict key" OR includes "Identity Toolkit API"');
+  console.log('   - Ensure VITE_FIREBASE_API_KEY is set and appropriately restricted');
+  console.log('   - Prefer App Check and domain restrictions over global access');
   console.log('3. ⚠️  Check Authorized Domains in Firebase Console');
   console.log('   - Go to: Authentication > Settings > Authorized domains');
   console.log('   - Make sure "localhost" is listed');
